@@ -1,0 +1,43 @@
+{% load bootstrap4 %}
+{% load staticfiles %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+<link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+
+<title>Cadastro</title>
+
+<div class="container">
+<br>
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card">
+<header class="card-header">
+	<a href="" class="float-right btn btn-outline-primary mt-1">Log in</a>
+	<h4 class="card-title mt-2">Sign Up</h4>
+</header>
+<article class="card-body">
+<form class="needs-validation" method="POST">
+	<div class="form-group">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+	</div> <!-- form-group end.// -->  
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Cadastra usuario  </button>
+    </div> <!-- form-group// -->      
+</form>
+</article> <!-- card-body end .// -->
+<div class="border-top card-body text-center">Já está cadastrado? <a href="{% url 'url_login' %}">Log In</a></div>
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+
+</div> <!-- row.//-->
+
+
+</div> 
+<!--container end.//-->

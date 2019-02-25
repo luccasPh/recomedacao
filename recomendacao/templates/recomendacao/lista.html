@@ -1,0 +1,46 @@
+<!doctype html>
+{% load bootstrap4 %}
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Eventos</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/lista.css' %}">
+    <!-- Custom styles for this template -->
+  </head>
+    <body class="bg-light">
+        <div class="container">   
+            <div class="py-4 text-center">
+                <h2>LISTA DE EVENTOS ORGANIZADO</h2>
+            <hr>
+            </div>
+            <div class="row">
+                <div class="col-md-4 order-md-2 mb-4">
+                    <ul class="list-group">
+                    {% for evento in eventos%}
+                        <li class="list-group-item"><strong>{{evento}}</strong>
+                            <h6> <small class="text-muted">Data: {{evento.data}}</small></h6>
+                            <h6> <small class="text-muted">Horario: {{evento.hr_ini}} a {{evento.hr_fim}}</small></h6>
+                            {% if evento.priori %}
+                            <h6> <small class="text-muted">Prioridade: Alta</small></h6>
+                            {% else %}
+                            <h6> <small class="text-muted">Prioridade: Normal</small></h6>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    <a href="{% url 'url_index' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+body{
+    background-image: url("../img/background-eventos.jpg");
+    background-size: 1520px 856px; 
+}
+
+.list-group{
+    width: 300px;
+    max-height: 500px;
+    margin-bottom: 10px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.container{
+
+    margin-bottom: 105px;
+    width: 730px;
+
+}
+.row{
+    margin-left: 150px;
+}

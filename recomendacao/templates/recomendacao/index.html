@@ -1,0 +1,89 @@
+<!doctype html>
+{% load bootstrap4 %}
+{% load staticfiles %}
+<html lang="pt-Br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Eventos</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <!-- Custom styles for this template -->
+  </head>
+
+  <body class="bg-light">
+    <div class="container">
+        <a href="{% url 'url_logout' %}" class="float-right">
+            Sair
+          </a>
+      <div class="py-5 text-center">
+        <h2>ORGANIZAÇÃO DE EVENTOS</h2>
+        <p class="lead">Simples programa que organiza uma lista de eventos de modo que se obtenha o maior número de eventos em diferentes data e horários diferentes .</p>
+      </div>
+      {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">{{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {% endfor %}
+            </ul>
+            {% endif %}
+      <hr>
+      <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="mb-3">Lista de eventos</h4>
+            <span class="badge badge-secondary badge-pill"></span>
+          </h4>
+          <ul class="list-group">
+            {% for evento in eventos%}
+                <li class="list-group-item"><strong>{{evento}}</strong>
+                  <h6> <small class="text-muted">Data: {{evento.data}}</small></h6>
+                  <h6> <small class="text-muted">Horario: {{evento.hr_ini}} a {{evento.hr_fim}}</small></h6>
+                  {% if evento.priori %}
+                    <h6> <small class="text-muted">Prioridade: Alta</small></h6>
+                  {% else %}
+                    <h6> <small class="text-muted">Prioridade: Normal</small></h6>
+                  {% endif %}
+                  <a href="{% url 'url_delete' evento.id %}"><button type="button" class="btn btn-danger btn-sm">Deletar</button></a>
+                </li>
+            {% endfor %}
+          </ul>
+            <a href="{% url 'url_lista' %}"><button type="button" class="btn btn-secondary">Organizar</button></a>
+        </div>
+        <div class="card fat" id="card1">
+          <div class="card-body" id="card2">
+            <h4 class="mb-3">Eventos</h4>
+            <hr>
+            <form class="needs-validation" method="POST">
+                  {% csrf_token %}
+                  {% bootstrap_form form %}
+                  <div class="invalid-feedback">
+                    Valid first name is required.
+                  </div>
+              <hr>
+              <button class="btn btn-primary" type="submit">Adicionar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <hr class="mb-4">
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
