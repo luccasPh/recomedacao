@@ -15,8 +15,8 @@
 
 
     <!-- Include Bootstrap Datepicker -->
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css" />
-    <link rel="stylesheet" href="css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
 
     <style>
       .list-group{
@@ -63,23 +63,37 @@
           <form class="needs-validation">
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="primeiroNome">Descrição:</label>
-                <input type="text" class="form-control" id="descri" placeholder="Descrição do evento">
+                <label>Descrição:</label>
+                <input type="text" class="form-control" id="descri" placeholder="Descrição do evento.">
               </div>
               <div class="col-md-6 mb-3">
-                  <label for="sobrenome">Data:</label>
-                  <input type="text" class="form-control" id="datepicker" placeholder="Data do evento">
+                  <label>Data:</label>
+                  <div class="input-group date" id="datepicker" data-target-input="nearest">
+                    <input placeholder="Data do evento." id="data" type="text" class="form-control datetimepicker-input" data-target="#datepicker"/>
+                    <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
               </div>
             </div>
 
-            <label for="hor">Horário:</label>
+            <label>Horário:</label>
             <div class="row">
               <div class="col-md-6 mb-3 ">
-                  <input type="text" class="form-control" id="timepicker1" placeholder="Inicio">
-                  <i class="glyphicon glyphicon-chevron-up"></i>
+                <div class="input-group date" id="timepicker1" data-target-input="nearest">
+                  <input placeholder="Horário de inicio do evento." id="tempo1" type="text" class="form-control datetimepicker-input" data-target="#timepicker1"/>
+                  <div class="input-group-append" data-target="#timepicker1" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                  </div>
+                </div>
               </div>
               <div class="col-md-6 mb-3">
-                  <input type="text" class="form-control" id="timepicker2" placeholder="Fim">
+                <div class="input-group date" id="timepicker2" data-target-input="nearest">
+                  <input placeholder="Horário do termino do evento." id="tempo2" type="text" class="form-control datetimepicker-input" data-target="#timepicker2"/>
+                  <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="custom-control custom-checkbox">
@@ -100,33 +114,28 @@
     <!-- Principal JavaScript do Bootstrap
     ================================================== -->
     <!-- Foi colocado no final para a página carregar mais rápido -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="js/bootstrap-datepicker.min.js"></script>
-    <script src="js/bootstrap-timepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <script>
-      $(function() {
-        $.fn.datepicker.dates["pt-BR"] = {
-          days: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-          daysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
-          daysMin: ["Do", "Se", "Te", "Qu", "Qu", "Se", "Sa"],
-          months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-          monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-          today: "Hoje",
-          monthsTitle: "Meses",
-          clear: "Limpar",
-          format: "dd/mm/yyyy"
-        };
-        $('#datepicker').datepicker({
-          format: 'dd/mm/yyyy',                
-          language: 'pt-BR'
+     $(function () {
+        $('#datepicker').datetimepicker({
+          format: 'L',
+          locale: 'pt-br'
+
         });
-      });
-    </script>
+        $('#timepicker1').datetimepicker({
+          format: 'LT',
 
-    <script>
-      $('#timepicker1').timepicker();
-      $('#timepicker2').timepicker();
+        });
+        $('#timepicker2').datetimepicker({
+          format: 'LT',
+
+        });
+       
+    });
     </script>
 
     <script>
@@ -134,8 +143,7 @@
       var adicionarBut = document.getElementById("adiciona");
       var lista = document.getElementById("listaEnv");
       var listaRes = document.getElementById("showRes");
-      document.getElementById('timepicker1').value = '';
-      document.getElementById('timepicker2').value = '';
+
 
       function coverteData(data){
         var d1 = data.split("/");
@@ -184,9 +192,13 @@
       
       function adicionaEvento(){
         var descricaoVal = $("#descri").val();
-        var dataVal = $("#datepicker").val();
-        var horaIniVal = $("#timepicker1").val();
-        var horaFimVal = $("#timepicker2").val();
+        if(listaEventos[descricaoVal]){
+          $('[id="'+ descricaoVal + '"]').remove();
+        }
+        
+        var dataVal = $("#data").val();
+        var horaIniVal = $("#tempo1").val();
+        var horaFimVal = $("#tempo2").val();
         var pri = document.getElementById("priori").checked;
         var normal = 'Não';
 
@@ -196,14 +208,14 @@
           normal = 'Sim';
         }
         var id = "'" + descricaoVal + "'";
-        lista.innerHTML += '<li class="list-group-item d-flex justify-content-between lh-condensed" id="' + descricaoVal + '"><div><h6 class="my-0">' + descricaoVal + '</h6><h6><small class="text-muted">Data: ' + dataVal + '</small></h6><h6><small class="text-muted">Horario: ' + horaIniVal + ' a ' + horaFimVal + '</small></h6><h6><small class="text-muted">Prioridade: '+ normal + '</small></h6></div><a><button type="button" class="btn btn-danger btn-sm" onclick="removeEvento('+ id +')">Deletar</button></a></li>';
+        lista.innerHTML += '<li class="list-group-item d-flex justify-content-between lh-condensed" id="' + descricaoVal + '"><div><h6 class="my-0">' + descricaoVal + '</h6><h6><small class="text-muted">Data: ' + dataVal + '</small></h6><h6><small class="text-muted">Horario: ' + horaIniVal + ' a ' + horaFimVal + '</small></h6><h6><small class="text-muted">Prioridade: '+ normal + '</small></h6></div><div class="btn-group-vertical"><button type="button" class="btn btn-danger btn-sm" onclick="removeEvento('+ id +')" style="margin-bottom: 30px;">Deletar</button><button type="button" class="btn btn-warning btn-sm" onclick="editarEvento('+ id +')">Editar</button></div></li>';
         
         document.getElementById('quanti').innerHTML = Object.keys(listaEventos).length;
 
         document.getElementById('descri').value = '';
-        document.getElementById('datepicker').value = '';
-        document.getElementById('timepicker1').value = '';
-        document.getElementById('timepicker2').value = '';
+        document.getElementById('data').value = '';
+        document.getElementById('tempo1').value = '';
+        document.getElementById('tempo2').value = '';
         document.getElementById('priori').checked = false;
       }
 
@@ -211,6 +223,15 @@
         $('[id="'+ e + '"]').remove();
         delete listaEventos[e];
         document.getElementById('quanti').innerHTML = Object.keys(listaEventos).length;
+      }
+
+      function editarEvento(e){
+        document.getElementById('descri').value = listaEventos[e].dados.desr;
+        document.getElementById('data').value = listaEventos[e].dados.data;
+        document.getElementById('tempo1').value = listaEventos[e].dados.hori;
+        document.getElementById('tempo2').value = listaEventos[e].dados.horf;
+        document.getElementById('priori').checked = listaEventos[e].pri;
+        removeEvento(e)
       }
 
       function limpar(){
@@ -237,24 +258,29 @@
         newLista = newLista.sort((a,b) => (a.dathof > b.dathof) ? 1 : -1);
 
         resLista.push(newLista[0])
+        var j = 0;
         for(var i=1; i<newLista.length; ++i){
-          if(resLista[i-1].dat == newLista[i].dat){
+          if(resLista[j].dat == newLista[i].dat){
             if(newLista[i].pri == true){
-              if(resLista[i-1].hof > newLista[i].hoi){
-                resLista[i-1] = newLista[i];
+              if(resLista[j].hof > newLista[i].hoi){
+                resLista[j] = newLista[i];
+                
               }
               else{
                 resLista.push(newLista[i]);
+                j++;
               }
             }
             else{
-              if(resLista[i-1].hof < newLista[i].hoi){
+              if(resLista[j].hof < newLista[i].hoi){
                 resLista.push(newLista[i]);
+                j++;
               }
             }
           }
           else{
             resLista.push(newLista[i]);
+            j++;
           }
         }
 
@@ -276,9 +302,3 @@
     </script>
   </body>
 </html>
-<!--
-            <div class="py-5 text-center" id="rtd"><h2>Resultado</h2><hr></hr></div><div class="row"><div class="card-deck text-center">
-
-                    <div class="card border-dark text-white bg-success mb-3" style="max-width: 18rem;"><div class="card-body"><h4 class="card-title">Festa de Aniversario do João</h4><p class="card-text">Data: 24/03/2019</p><p class="card-text">Horario: 12:45 AM a 3:45 PM</p></div></div>
-
-                </div></div>
