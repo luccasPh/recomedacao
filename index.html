@@ -2,11 +2,8 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
     <title>Exemplo de formulário para checkout usando Bootstrap</title>
 
@@ -15,7 +12,7 @@
 
 
     <!-- Include Bootstrap Datepicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
 
     <style>
@@ -114,10 +111,10 @@
     <!-- Principal JavaScript do Bootstrap
     ================================================== -->
     <!-- Foi colocado no final para a página carregar mais rápido -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/moment-with-locales.min.js"></script>
+    <script src="js/tempusdominus-bootstrap-4.min.js"></script>
 
     <script>
      $(function () {
@@ -253,6 +250,9 @@
           return false;
         }
 
+        $('[id="resCards"]').remove();
+        var listaRes = document.getElementById("showRes");
+
         var resLista = [];
         var newLista = Object.entries(listaEventos).map(([key,value]) => (value));
         newLista = newLista.sort((a,b) => (a.dathof > b.dathof) ? 1 : -1);
@@ -284,14 +284,14 @@
           }
         }
 
-        listaRes.innerHTML += '<div class="py-5 text-center" id="rtd"><h2>Resultado</h2><hr></hr></div><div class="card-deck text-center">';
+        listaRes.innerHTML += '<div class="py-5 text-center" id="resCards"><h2>Resultado</h2><hr></hr></div><div class="card-deck text-center">';
         
         for(var ev of resLista){
           if(ev.pri == true){
-            listaRes.innerHTML += '<div class="card border-dark text-white bg-success mb-3" style="max-width: 18rem;"><div class="card-body"><h4 class="card-title">'+ev.dados.desr+'</h4><p class="card-text">Data: '+ev.dados.data+'</p><p class="card-text">Horario: '+ev.dados.hori+' a '+ev.dados.horf+'</p></div></div>';
+            listaRes.innerHTML += '<div class="card border-dark text-white bg-success mb-3" style="max-width: 18rem;" id="resCards"><div class="card-body"><h4 class="card-title">'+ev.dados.desr+'</h4><p class="card-text">Data: '+ev.dados.data+'</p><p class="card-text">Horario: '+ev.dados.hori+' a '+ev.dados.horf+'</p></div></div>';
           }
           else{
-            listaRes.innerHTML += '<div class="card border-dark text-white bg-info mb-3" style="max-width: 18rem;"><div class="card-body"><h4 class="card-title">'+ev.dados.desr+'</h4><p class="card-text">Data: '+ev.dados.data+'</p><p class="card-text">Horario: '+ev.dados.hori+' a '+ev.dados.horf+'</p></div></div>';
+            listaRes.innerHTML += '<div class="card border-dark text-white bg-info mb-3" style="max-width: 18rem;" id="resCards"><div class="card-body"><h4 class="card-title">'+ev.dados.desr+'</h4><p class="card-text">Data: '+ev.dados.data+'</p><p class="card-text">Horario: '+ev.dados.hori+' a '+ev.dados.horf+'</p></div></div>';
           }
         }
 
